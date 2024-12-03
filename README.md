@@ -2,7 +2,12 @@
 
 ## Idea
 
-From a [movie dataset](https://www.kaggle.com/datasets/akashkotal/imbd-top-1000-with-description) and a user description, we return Movies !
+From a movie dataset and a user description, we return Movies !
+
+**Possible datasets:**
+
+- [1k movies](https://www.kaggle.com/datasets/akashkotal/imbd-top-1000-with-description)
+- [10k movies](https://www.kaggle.com/datasets/ashpalsingh1525/imdb-movies-dataset)
 
 So the idea is to use RAG to get k-most relevant movies descriptions and then we return them and order them by rating.
 
