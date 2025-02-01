@@ -15,6 +15,8 @@ Moreover we can filter them by some other feature.
 
 We can also have a way in the interface to change the number k of movies.
 
+For software specification and brainstorming: [miro board](https://miro.com/welcomeonboard/c0ppclVqUGM2aysyT0t0S1liTVZoYzdVeGVTV3RtOFBIZk1wK0dCajdPUm5YSDIwaGdha3BZWTEzN0k2SWdMV0s0L1NYREt5Q2oxT1FqMGpCZDJSYnl5bWVRNitWOGhya1ZCTGdOQTBwWlBYaFVwWXNtK2VVMFdZWlJQWlBuNDYhZQ==?share_link_id=912840001517)
+
 ## Talk about issues or extensions
 
 Already seen movies etc ...
