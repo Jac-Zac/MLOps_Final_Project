@@ -27,28 +27,30 @@ We want to show other films that do not include those ones. So we can get the k+
 
 ### Development
 
-- Funzionalitaa (definirle bene, con diagrammi requisiti non funzionali, funzionali)
-
-- Task: dividerci per ruoli
-- Strategia agile
-- Version control
-
-> Github versionining control
-
-Macro test, streamlit ...,
-
-4. Cicli di sviluppo 1, 2 volte alla settimaan, grafici di miglioramento delle performance
-   Poche cose flusso semplice, poi sempre piu avanzato.
-
-Prima fare le interfacce, fare richieste response, No LLM prima trovare la prima versione piu cista.
-Migliorare fare in teams.
+- **Features**: Clearly define with diagrams, functional and non-functional requirements.
+- **Tasks**: Assign roles.
+- **Agile Strategy**
+- **Version Control**
+  - GitHub versioning control
+- **Testing**
+  - Macro tests, Streamlit, etc.
+- **Development Cycles**
+  - 1-2 times per week
+  - Performance improvement graphs
+  - Start with a simple workflow, then gradually advance
+- **Development Priorities**
+  - First, build interfaces, define request and response structures.
+  - No LLM initially, find the most cost-effective first version.
+  - Improve and develop as a team.
 
 ### Report
 
-Ogni ciclo, strategia, discorso vicino a quello che abbiamo visto con i diagrammi giusti, possiamo fare una registrazione di 5 minuti. Commits.
+- Document the strategy with appropriate diagrams for each cycle.
+- Optionally record 5-minute updates.
+- Well-documented commits.
 
-> CI/CD non serve, teniamola per discussion
+> **Note**: CI/CD is not needed for now; keep it for discussion.
 
-Proof Of Concvept
+### Proof of Concept
 
-Possiamo usare qualche unitteest per vedere che lecose funsionino
+- Use some unit tests to verify that components function correctly.
