@@ -1,8 +1,9 @@
 # MLops Final Project
 
-# name idea: PickaFilm
-MovieMatch
-FilmFinder
+# name idea: 
+- PickaFilm
+- MovieMatch
+- FilmFinder
 
 ## Idea
 
