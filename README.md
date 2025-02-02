@@ -1,5 +1,9 @@
 # MLops Final Project
 
+# name idea: PickaFilm
+MovieMatch
+FilmFinder
+
 ## Idea
 
 From a movie dataset and a user description, we return Movies !
