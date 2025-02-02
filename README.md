@@ -42,6 +42,7 @@ We want to show other films that do not include those ones. So we can get the k+
   - First, build interfaces, define request and response structures.
   - No LLM initially, find the most cost-effective first version.
   - Improve and develop as a team.
+  - Final deployment perhaps using Docker
 
 ### Report
 
