@@ -1,5 +1,9 @@
 # PickaFilm
 
+> Click the button below to access the APP
+
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://pickafilm.streamlit.app/)
+
 ## Idea
 
 From a movie dataset and a user description, we return Movies!
