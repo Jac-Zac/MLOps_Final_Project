@@ -6,7 +6,7 @@ From a movie dataset and a user description, we return Movies!
 
 ## Documentation
 
-For detailed information, please see our [Documentation](docs/index.md).
+For detailed information, please see our [Documentation](https://jac-zac.github.io/PickaFilm/).
 
 ### Possible Datasets
 
