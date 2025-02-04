@@ -89,4 +89,3 @@ Details on algorithmic approaches, dataset schema, and API documentation.
    6. [Software Quality Attributes](#36-software-quality-attributes)
 4. [Supporting Information](#4-supporting-information)
 5. [Appendices](#5-appendices)
-6. [Index](#6-index)
