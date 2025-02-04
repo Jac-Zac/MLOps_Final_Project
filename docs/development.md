@@ -25,7 +25,7 @@ We welcome contributions to improve **PickaFilm**! To get started:
 ## Code Standards
 
 - **Python Version:**  
-  We use Python 3.11. Ensure your development environment uses this version.
+  We use Python 3.12. Ensure your development environment uses this version.
 
 - **Formatting:**  
   Follow [PEP 8](https://www.python.org/dev/peps/pep-0008/) for Python coding style. Tools like `flake8` or `black` can help maintain consistency.
