@@ -6,7 +6,7 @@ This guide walks you through setting up **PickaFilm** on your local machine.
 
 Ensure you have the following installed:
 
-- **Python 3.11+**
+- **Python 3.12+**
 - **pip** (Python package manager)
 - **Docker** (optional, for containerized deployment)
 
