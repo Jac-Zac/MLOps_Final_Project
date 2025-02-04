@@ -1,62 +1,58 @@
-# MLops Final Project
-
-# name idea: 
-- PickaFilm
-- MovieMatch
-- FilmFinder
+# PickaFilm
 
 ## Idea
 
-From a movie dataset and a user description, we return Movies !
+From a movie dataset and a user description, we return Movies!
 
-**Possible datasets:**
+## Documentation
+
+For detailed information, please see our [Documentation](docs/index.md).
+
+### Possible Datasets
 
 - [1k movies](https://www.kaggle.com/datasets/akashkotal/imbd-top-1000-with-description)
 - [10k movies](https://www.kaggle.com/datasets/ashpalsingh1525/imdb-movies-dataset)
 
-So the idea is to use RAG to get k-most relevant movies descriptions and then we return them and order them by rating.
+The idea is to use Retrieval-Augmented Generation (RAG) to get the **k-most relevant movie descriptions**, order them by rating, and filter them by other features.
 
-Moreover we can filter them by some other feature.
+We also provide an interface to adjust the number of **k** movies retrieved.
 
-We can also have a way in the interface to change the number k of movies.
+For software specifications and brainstorming, see our [Miro board](https://miro.com/welcomeonboard/c0ppclVqUGM2aysyT0t0S1liTVZoYzdVeGVTV3RtOFBIZk1wK0dCajdPUm5YSDIwaGdha3BZWTEzN0k2SWdMV0s0L1NYREt5Q2oxT1FqMGpCZDJSYnl5bWVRNitWOGhya1ZCTGdOQTBwWlBYaFVwWXNtK2VVMFdZWlJQWlBuNDYhZQ==?share_link_id=912840001517).
 
-For software specification and brainstorming: [miro board](https://miro.com/welcomeonboard/c0ppclVqUGM2aysyT0t0S1liTVZoYzdVeGVTV3RtOFBIZk1wK0dCajdPUm5YSDIwaGdha3BZWTEzN0k2SWdMV0s0L1NYREt5Q2oxT1FqMGpCZDJSYnl5bWVRNitWOGhya1ZCTGdOQTBwWlBYaFVwWXNtK2VVMFdZWlJQWlBuNDYhZQ==?share_link_id=912840001517)
+## Talk About Issues or Extensions
 
-## Talk about issues or extensions
+### Already Seen Movies
 
-Already seen movies etc ...
+To tackle this **limitation**, we introduce a **k+1 system** to avoid recommending already seen movies and suggest fresh alternatives.
 
-#### To tackle this semi limitation
+## Development Workflow
 
-We want to show other films that do not include those ones. So we can get the k+1 system
-
-### Development
+### Development Strategy
 
 - **Features**: Clearly define with diagrams, functional and non-functional requirements.
 - **Tasks**: Assign roles.
 - **Agile Strategy**
-- **Version Control**
-  - GitHub versioning control
-- **Testing**
-  - Macro tests, Streamlit, etc.
-- **Development Cycles**
-  - 1-2 times per week
-  - Performance improvement graphs
-  - Start with a simple workflow, then gradually advance
-- **Development Priorities**
-  - First, build interfaces, define request and response structures.
-  - No LLM initially, find the most cost-effective first version.
-  - Improve and develop as a team.
-  - Final deployment perhaps using Docker
+- **Version Control**: GitHub for versioning.
+- **Testing**: Unit tests with `pytest`, UI tests for Streamlit.
+- **Development Cycles**:
+  - 1-2 updates per week.
+  - Performance improvement tracking.
+  - Start with a simple workflow, then enhance incrementally.
+- **Priorities**:
+  - **Phase 1**: Build interfaces, define request/response structures.
+  - **Phase 2**: No LLM initially—find a cost-effective first version.
+  - **Phase 3**: Optimize and iterate as a team.
+  - **Final Deployment**: Possibly using Docker.
 
-### Report
+### Reporting and Documentation
 
-- Document the strategy with appropriate diagrams for each cycle.
-- Optionally record 5-minute updates.
-- Well-documented commits.
+- **Strategy Documentation**: Include diagrams for each cycle.
+- **Optional Updates**: 5-minute progress recordings.
+- **Well-Documented Commits**: Clear, structured messages.
 
-> **Note**: CI/CD is not needed for now; keep it for discussion.
+> **Note:** CI/CD is not needed for now; keep it open for discussion.
 
-### Proof of Concept
+## Proof of Concept
 
-- Use some unit tests to verify that components function correctly.
+- Implement unit tests to validate the core components.
+- Ensure smooth integration with Streamlit.
