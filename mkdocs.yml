@@ -1,0 +1,4 @@
+site_name: PickaFilm Documentation
+site_url: https://jac-zac.github.io/PickaFilm/
+theme:
+  name: material
