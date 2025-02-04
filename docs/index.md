@@ -8,3 +8,4 @@ Welcome to the PickaFilm documentation. This guide will help you get started wit
 - [Architecture](architecture.md)
 - [Development](development.md)
 - [Deployment](deployment.md)
+- [Specification](specification.md)
