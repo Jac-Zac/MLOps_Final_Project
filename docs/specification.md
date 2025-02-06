@@ -4,9 +4,7 @@
 The purpose of this software is to recommend films to users. Based on a minimum rating value they provide, the system will return a random film with an equal or higher rating.
 
 ### 1.2 Scope
-This system is designed for movie enthusiasts seeking film recommendations without a predefined selection in mind. The software will:
-- Accept a minimum rating value.
-- Return a random film from an IMDb-based database.
+This system is designed for movie enthusiasts seeking film recommendations without a predefined selection in mind. The software will accept a minimum rating value and return a random film from an IMDb-based database.
 
 The system will be implemented as a web-based application with a backend for processing. Future extensions may include film suggestion based on description keywords.
 
