@@ -13,9 +13,9 @@ def load_data():
         return pd.DataFrame()
 
 
-def get_random_film(df):
-    """Returns a random movie from the dataset"""
-    return df.sample(1).iloc[0] if not df.empty else None
+def get_random_films(df, num_films):
+    """Return a list of random films from the dataframe."""
+    return df.sample(min(num_films, len(df))).to_dict(orient="records")
 
 
 def get_poster_url(title, year):
