@@ -1,5 +1,7 @@
 # PickaFilm
 
+[![Tests](https://github.com/jac-zac/PickaFilm/actions/workflows/ci.yml/badge.svg)](https://github.com/jac-zac/PickaFilm/actions/workflows/ci.yml)
+
 > Click the button below to access the APP
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://pickafilm.streamlit.app/)
