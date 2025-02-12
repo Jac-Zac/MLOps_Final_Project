@@ -18,7 +18,7 @@ For detailed information, please see our [Documentation](https://jac-zac.github.
 
 - [1k movies](https://www.kaggle.com/datasets/akashkotal/imbd-top-1000-with-description)
 - [10k movies](https://www.kaggle.com/datasets/ashpalsingh1525/imdb-movies-dataset)
-- [TMDB n movies]
+- [TMDB n movies](https://developer.themoviedb.org/docs/getting-started)
 
 The idea is to use Retrieval-Augmented Generation (RAG) to get the **k-most relevant movie descriptions**, order them by rating, and filter them by other features.
 It is also possible to select just a minimum rating or genre.
