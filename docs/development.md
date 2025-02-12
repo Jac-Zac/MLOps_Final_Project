@@ -81,4 +81,12 @@ Before submitting a PR, verify that all tests pass locally:
    streamlit run src/app.py
    ```
 
+5. **Run tests:**
+
+   > From the root of the directory you can run all of the tests
+
+   ```bash
+   pytest tests/test_app.py
+   ```
+
    Happy coding!
