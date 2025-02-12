@@ -68,8 +68,17 @@ Before submitting a PR, verify that all tests pass locally:
    ```
 
 3. **Install Dependencies:**
+
    ```bash
    pip install -r requirements.txt
    ```
 
-Happy coding!
+4. **Run the app:**
+
+   > You should add your API key inside `.streamlit/secrets.toml`
+
+   ```bash
+   streamlit run src/app.py
+   ```
+
+   Happy coding!

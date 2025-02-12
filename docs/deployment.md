@@ -64,6 +64,7 @@ To trigger the deployment workflow:
 
 - **Secrets and Credentials:**  
   Make sure your repository has the necessary secrets set up (e.g., `GITHUB_TOKEN` for authenticating with the GitHub Container Registry).
+  Set up the API key inside `.streamlit/secrets.toml` looking at the `sample_secrets.toml` file.
 
 - **Environment Variables:**  
   If your app requires additional environment variables, configure them in your Dockerfile or pass them at runtime.
