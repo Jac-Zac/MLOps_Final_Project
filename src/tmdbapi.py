@@ -7,7 +7,7 @@ import numpy as np
 
 print("\nmiao\n")
 
-API_KEY = "bau"  
+API_KEY = "miao"  # e.g. bau
 BASE_URL = "https://api.themoviedb.org/3/discover/movie"
 
 all_movies = []
@@ -63,20 +63,18 @@ with open("movies.csv", mode="w", encoding="utf-8", newline="") as csvfile:
 
 print("CSV file 'movies.csv' has been created.")
 
-
-# Step 1: Load your CSV into a DataFrame
 df = pd.read_csv("movies.csv")
 
-# Step 2: Compute embeddings for the textual data (e.g., the 'overview' field)
-model = SentenceTransformer('all-MiniLM-L6-v2')
+model = SentenceTransformer('all-MiniLM-L6-v2') #~llm
 embeddings = model.encode(df['overview'].tolist(), convert_to_numpy=True)
 
-# Step 3: Build a FAISS index
 embedding_dimension = embeddings.shape[1]
 index = faiss.IndexFlatL2(embedding_dimension)  # L2 distance index
 index.add(embeddings)  # Add embeddings to the index
 
 faiss.write_index(index, "movies_faiss.index")
+
+# faiss: facebook AI similarity search
 
 
 
