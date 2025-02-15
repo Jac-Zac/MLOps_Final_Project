@@ -7,7 +7,7 @@ import numpy as np
 
 print("\nmiao\n")
 
-API_KEY = "6e6da0f3853ca035ad128da2f320371d"  # e.g. 6e6da0f3853ca035ad128da2f320371d
+API_KEY = "bau"  
 BASE_URL = "https://api.themoviedb.org/3/discover/movie"
 
 all_movies = []
