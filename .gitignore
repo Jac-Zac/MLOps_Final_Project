@@ -5,3 +5,5 @@
 **/*.ipynb_checkpoints/
 **/*.virtual_documents
 .streamlit/secrets.toml
+data/
+.pytest_cache
