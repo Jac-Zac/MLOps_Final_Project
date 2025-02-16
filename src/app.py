@@ -1,96 +1,74 @@
+# app.py
+
 import streamlit as st
+import torch
+from sentence_transformers import SentenceTransformer
 
-from db import get_poster_url, get_random_films, load_data
+from db import get_poster_url, get_random_films, load_data_and_index
+from movie_utils import MovieDisplay, MovieSearch, SidebarFilters, setup_page
 
-# App configuration
-st.set_page_config(page_title="PickaFilm", page_icon="🎬", layout="wide")
 
-# Load data
-df = load_data()
+def initialize_model():
+    """Initialize the sentence transformer model with error handling"""
+    try:
+        # Suppress the torch.classes warning
+        import warnings
 
-# UI elements
-st.markdown(
-    """
-# 🎬 PickaFilm
-Discover your next favorite movie!
-"""
-)
+        warnings.filterwarnings("ignore", category=UserWarning, module="torch.classes")
 
-# Sidebar filters
-with st.sidebar:
-    st.markdown("## 🔍 Filter Movies")
-    min_rating = st.slider("Minimum Rating", 0.0, 10.0, 7.0, 0.1)
-    num_films = st.slider(
-        "Number of Films", 1, 10, 3, key="num_films"
-    )  # Slider for number of films
+        return SentenceTransformer("all-MiniLM-L6-v2")
+    except Exception as e:
+        st.error(f"Error initializing model: {str(e)}")
+        st.stop()
 
-filtered_df = df[df["Movie Rating"].astype(float) >= min_rating]
 
-# Random film selection button
-st.markdown(
-    """
-    <style>
-    .wide-button-container {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-    }
-    .wide-button {
-        width: 100%;
-        padding: 15px;
-        font-size: 18px;
-    }
-    </style>
-""",
-    unsafe_allow_html=True,
-)
+def main():
+    # Setup and configuration
+    setup_page()
 
-if "random_clicked" not in st.session_state:
-    st.session_state.random_clicked = False
+    # Load model and data
+    model = initialize_model()
+    api_key = st.secrets["tmdb"]["api_key"]
+    df, index = load_data_and_index(api_key)
 
-st.markdown('<div class="wide-button-container">', unsafe_allow_html=True)
-if st.button(
-    "🎲 Get Random Films", key="random_films", help="Click to discover random movies"
-):
-    st.session_state.random_clicked = True
-st.markdown("</div>", unsafe_allow_html=True)
+    # Initialize components
+    movie_search = MovieSearch(model, index, df)
 
-if st.session_state.random_clicked:
-    if filtered_df.empty:
-        st.error("No movies found with selected rating")
-    else:
-        films = get_random_films(filtered_df, num_films)
-        cols_per_row = 5
-        rows = [films[i : i + cols_per_row] for i in range(0, len(films), cols_per_row)]
+    # Get filters from sidebar
+    min_rating, num_films = SidebarFilters.render()
+    filtered_df = df[df["vote_average"].astype(float) >= min_rating]
 
-        for row in rows:
-            cols = st.columns(len(row))
-            for col, film in zip(cols, row):
-                poster_url = get_poster_url(film["Movie Name"], film["Year of Release"])
-                with col:
-                    if poster_url:
-                        st.image(poster_url, use_container_width=True)
-                    else:
-                        st.warning("Poster not available")
-                    st.markdown(
-                        f"**🎞️ {film['Movie Name']} ({film['Year of Release']})**"
-                    )
-                    st.markdown(f"⭐ {film['Movie Rating']} | ⏱ {film['Watch Time']}")
-    st.markdown("---")
+    # Initialize state for tracking if we should show featured movies
+    if "show_featured" not in st.session_state:
+        st.session_state.show_featured = True
 
-if not st.session_state.random_clicked:
-    # Showcase of 5 random films
-    st.markdown("## 🎥 Featured Movies")
-    showcase_films = get_random_films(df, 5)
-    cols = st.columns(len(showcase_films))
+    # Search functionality
+    query = st.text_input("🔍 Search for a movie:")
+    if query:
+        similar_movies = movie_search.search_movies(query, num_films, min_rating)
+        if similar_movies:
+            st.markdown("## 🎥 Search Results")
+            MovieDisplay.display_movie_grid(similar_movies, get_poster_url)
+        else:
+            st.warning("No movies found matching your criteria.")
+        st.session_state.show_featured = False
 
-    for col, film in zip(cols, showcase_films):
-        poster_url = get_poster_url(film["Movie Name"], film["Year of Release"])
-        with col:
-            if poster_url:
-                st.image(poster_url, use_container_width=True)
-            else:
-                st.warning("Poster not available")
-            st.markdown(f"**🎞️ {film['Movie Name']} ({film['Year of Release']})**")
-            st.markdown(f"⭐ {film['Movie Rating']} | ⏱ {film['Watch Time']}")
-    st.markdown("---")
+    # Random film selection
+    st.markdown("## 🎲 Discover Random Films")
+    if st.button("🎲 Get Random Films"):
+        if filtered_df.empty:
+            st.error("No movies found with selected rating")
+        else:
+            random_films = get_random_films(filtered_df, num_films)
+            MovieDisplay.display_movie_grid(random_films, get_poster_url)
+            st.session_state.show_featured = False
+
+    # Featured movies (shown only when not searching and random films haven't been requested)
+    if st.session_state.show_featured:
+        st.markdown("## 🎥 Featured Movies")
+        showcase_films = get_random_films(df, 5)
+        MovieDisplay.display_movie_grid(showcase_films, get_poster_url)
+
+
+if __name__ == "__main__":
+    main()
