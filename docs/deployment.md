@@ -1,6 +1,6 @@
 # Deployment Guide
 
-This document explains how to deploy the **PickaFilm** app using Docker and GitHub Actions. The code resides in the `src/` directory.
+This document explains how to deploy the **PickaFilm** app using Docker. The code resides in the `src/` directory.
 
 ## Local Deployment with Docker
 
@@ -16,57 +16,31 @@ Containerizing the app ensures consistency across environments.
 
 ### Running the Docker Container Locally
 
-To run the container and map its port 8501 to your local machine:
+To run the container and map its port **8501** to your local machine:
 
 ```bash
 docker run -p 8501:8501 pickafilm:latest
 ```
 
-Then, open your browser at [http://localhost:8501](http://localhost:8501) to view the app.
+Then, open your browser at http://local host:8501 to view the app.
 
-## CI/CD Deployment with GitHub Actions
+## Running the App Without Docker
 
-The GitHub Actions workflow automates testing, building the Docker image, and pushing it to a container registry when you create a new release tag.
+If you prefer to run the app directly without using Docker:
 
-### Workflow Overview
-
-- **Location:** `.github/workflows/ci-cd.yml`
-- **Triggers:**
-  - The workflow runs on pushes to the `main` branch and on pull requests for continuous integration.
-  - When a tag (e.g., `v1.0.0`) is pushed, the workflow builds and pushes the Docker image to the GitHub Container Registry.
-
-### Key Steps in the Workflow
-
-1. **Checkout Code:**  
-   The workflow checks out the code from the repository.
-
-2. **Set Up Python and Install Dependencies:**  
-   It installs the required dependencies and runs tests using `pytest`.
-
-3. **Build and Push Docker Image:**  
-   When a new tag is detected, the workflow builds the Docker image and pushes it to the container registry with both `latest` and version-specific tags.
-
-### Creating a Release
-
-To trigger the deployment workflow:
-
-1. **Tag Your Release:**
+1. Install Python dependencies:
 
    ```bash
-   git tag v1.0.0
-   git push origin v1.0.0
+   pip install -r requirements.txt
    ```
 
-2. **GitHub Actions Workflow:**  
-   After the tag is pushed, GitHub Actions automatically builds and pushes the Docker image.
+2. Run the app:
+
+   ```bash
+   streamlit run src/main.py
+   ```
 
 ## Additional Considerations
 
-- **Secrets and Credentials:**  
-  Make sure your repository has the necessary secrets set up (e.g., `GITHUB_TOKEN` for authenticating with the GitHub Container Registry).
-  Set up the API key inside `.streamlit/secrets.toml` looking at the `sample_secrets.toml` file.
-
-- **Environment Variables:**  
-  If your app requires additional environment variables, configure them in your Dockerfile or pass them at runtime.
-
-This guide outlines the key steps for deploying the app both locally and via CI/CD. Adjust these instructions as needed to fit your specific deployment environment and requirements.
+- **Secrets and Credentials:**
+  Ensure any required secrets are configured, such as API keys inside `.streamlit/secrets.toml`, referring to `sample_secrets.toml`.
