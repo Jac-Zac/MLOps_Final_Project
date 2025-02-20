@@ -1,5 +1,6 @@
 # movie_utils.py
 
+from itertools import islice
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
@@ -12,27 +13,71 @@ class MovieDisplay:
 
     @staticmethod
     def display_movie_card(col, film: Dict, poster_url: Optional[str]) -> None:
-        """Display a single movie card in a column"""
+        """Display a single movie card in a column."""
         with col:
             if poster_url:
                 st.image(poster_url, use_container_width=True)
             else:
                 st.warning("Poster not available")
-            st.markdown(f"**🎞️ {film['original_title']}**")
-            st.markdown(f"⭐ {film['vote_average']}")
+
+            # Title container with fixed height to ensure uniform spacing
+            st.markdown(
+                f"""
+                <div style="
+                    height: 4em; 
+                    display: flex; 
+                    align-items: center; 
+                    justify-content: center;
+                    overflow: hidden;
+                    text-align: center;
+                ">
+                    <span style="font-size: 1.5em; color: #FFFFFF;">🎞️ {film['original_title']}</span>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+            # Info container styled for dark theme
+            st.markdown(
+                f"""
+                <div style="
+                    display: flex; 
+                    justify-content: space-around; 
+                    align-items: center;
+                    padding: 0.5em; 
+                    border-radius: 10px; 
+                    background-color: #333333;
+                    color: #FFFFFF;
+                    font-weight: bold;
+                    margin-top: 0.5em;
+                ">
+                    <div>📅 {film['release_date']}</div>
+                    <div>⭐ {film['vote_average']:.1f}</div>
+                    <div>🌍 {film['original_language']}</div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
 
     @staticmethod
     def display_movie_grid(movies: List[Dict], get_poster_url_func) -> None:
-        """Display a grid of movie cards"""
+        """Display a grid of movie cards with a max of 5 per row."""
         if not movies:
             st.warning("No movies found matching your criteria.")
             return
 
-        cols = st.columns(len(movies))
-        for col, film in zip(cols, movies):
-            poster_url = get_poster_url_func(film["original_title"])
-            MovieDisplay.display_movie_card(col, film, poster_url)
-        st.markdown("---")
+        # Process movies in chunks of 5
+        def chunked(iterable, size):
+            it = iter(iterable)
+            return iter(lambda: list(islice(it, size)), [])
+
+        for movie_chunk in chunked(movies, 5):
+            cols = st.columns(len(movie_chunk))  # Create only needed columns
+            for col, film in zip(cols, movie_chunk):
+                poster_url = get_poster_url_func(film["original_title"])
+                MovieDisplay.display_movie_card(col, film, poster_url)
+
+            st.markdown("---")  # Add a separator between rows
 
 
 class MovieSearch:
