@@ -1,21 +1,8 @@
 import streamlit as st
-import torch
-from sentence_transformers import SentenceTransformer
 
-from db import get_poster_url, get_random_films, load_data_and_index
+from db import (get_poster_url, get_random_films, load_data_and_index,
+                load_embedding_model)
 from movie_utils import MovieDisplay, MovieSearch, SidebarFilters, setup_page
-
-
-def initialize_model():
-    """Initialize the sentence transformer model with error handling"""
-    try:
-        import warnings
-
-        warnings.filterwarnings("ignore", category=UserWarning, module="torch.classes")
-        return SentenceTransformer("all-MiniLM-L6-v2")
-    except Exception as e:
-        st.error(f"Error initializing model: {str(e)}")
-        st.stop()
 
 
 @st.cache_resource
@@ -27,7 +14,7 @@ def get_cached_data():
 
 def main():
     setup_page()
-    model = initialize_model()
+    model = load_embedding_model()
     df, index = get_cached_data()
 
     if df is None or index is None:

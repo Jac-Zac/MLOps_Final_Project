@@ -12,7 +12,7 @@ from sentence_transformers import SentenceTransformer
 @st.cache_resource
 def load_embedding_model():
     """Loads and caches the SentenceTransformer model."""
-    return SentenceTransformer("all-MiniLM-L6-v2")
+    return SentenceTransformer("all-MiniLM-L12-v2")
 
 
 def fetch_movies(api_key, output_csv=None, max_pages=500):
@@ -21,7 +21,7 @@ def fetch_movies(api_key, output_csv=None, max_pages=500):
         params = {
             "api_key": api_key,
             "sort_by": "vote_average.desc",
-            "vote_count.gte": 500,
+            "vote_count.gte": 300,
             "page": page,
         }
         response = requests.get(
