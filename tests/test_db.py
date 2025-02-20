@@ -1,33 +1,72 @@
-# test_db.py
+from unittest.mock import MagicMock, patch
+
 import pandas as pd
 import pytest
+import streamlit as st
 
-from db import get_poster_url, get_random_films
+from src.db import fetch_movies, get_poster_url, get_random_films
 
 
 def test_get_poster_url():
     movie_name = "Inception"
-    expected_url = "https://image.tmdb.org/t/p/w500/Inception_2010.jpg"
-    assert get_poster_url(movie_name) == expected_url
+    expected_url = "https://image.tmdb.org/t/p/w780/Inception_2010.jpg"
+
+    # Patch the requests.get method used within src.db instead of the global one.
+    with patch("src.db.requests.get") as mock_get:
+        mock_response = MagicMock()
+        mock_response.json.return_value = {
+            "results": [{"poster_path": "/Inception_2010.jpg"}]
+        }
+        mock_get.return_value = mock_response
+
+        assert get_poster_url(movie_name) == expected_url
 
 
-def test_get_random_films():
-    # Create a small sample dataframe
-    data = {
-        "original_name": ["Film A", "Film B", "Film C"],
-        "average_rating": [8.0, 7.5, 9.0],
-        "Description": ["Desc A", "Desc B", "Desc C"],
+@patch("src.db.requests.get")
+@patch.object(st, "secrets", {"tmdb": {"api_key": "fake_api_key"}})
+def test_fetch_movies(mock_get):
+    mock_response = MagicMock()
+    mock_response.json.return_value = {
+        "results": [{"original_title": "Movie 1", "poster_path": "/poster1.jpg"}]
     }
-    df = pd.DataFrame(data)
+    mock_get.return_value = mock_response
 
-    # Request 2 films from the 3 available
-    films = get_random_films(df, 2)
-    assert len(films) == 2
-    # Ensure the films exist in our sample data
-    sample_names = set(data["original_name"])
-    for film in films:
-        assert film["original_name"] in sample_names
+    # Use the API key from Streamlit secrets
+    api_key = st.secrets["tmdb"]["api_key"]
+    movies = fetch_movies(api_key, max_pages=1)
+    assert isinstance(movies, list)
+    assert len(movies) == 1
+    assert movies[0]["original_title"] == "Movie 1"
 
-    # Request more films than available
-    films_all = get_random_films(df, 5)
-    assert len(films_all) == 3  # Should return all available films
+    # Verify the correct API call was made
+    mock_get.assert_called_with(
+        "https://api.themoviedb.org/3/discover/movie",
+        params={
+            "api_key": api_key,
+            "sort_by": "vote_average.desc",
+            "vote_count.gte": 500,
+            "page": 1,
+        },
+    )
+
+
+@pytest.fixture
+def sample_dataframe():
+    data = {
+        "original_title": ["Film A", "Film B", "Film C"],
+        "overview": [
+            "Action-packed movie.",
+            "Drama with a twist.",
+            "Thriller with suspense.",
+        ],
+    }
+    return pd.DataFrame(data)
+
+
+def test_get_random_films(sample_dataframe):
+    num_films = 2
+    random_films = get_random_films(sample_dataframe, num_films)
+
+    assert len(random_films) == num_films
+    assert all("original_title" in film for film in random_films)
+    assert all("overview" in film for film in random_films)

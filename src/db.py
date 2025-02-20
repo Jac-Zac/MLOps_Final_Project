@@ -15,16 +15,13 @@ def load_embedding_model():
     return SentenceTransformer("all-MiniLM-L6-v2")
 
 
-def fetch_movies(api_key, output_csv, max_pages=500):
-    # Ensure the directory for output_csv exists
-    os.makedirs(os.path.dirname(output_csv), exist_ok=True)
-
+def fetch_movies(api_key, output_csv=None, max_pages=500):
     all_movies = []
     for page in range(1, max_pages + 1):
         params = {
             "api_key": api_key,
             "sort_by": "vote_average.desc",
-            "vote_count.gte": 1000,
+            "vote_count.gte": 500,
             "page": page,
         }
         response = requests.get(
@@ -38,27 +35,29 @@ def fetch_movies(api_key, output_csv, max_pages=500):
             break
 
     st.info(f"Total movies fetched: {len(all_movies)}")
-    fields = [
-        "genre_ids",
-        "original_language",
-        "original_title",
-        "release_date",
-        "overview",
-        "popularity",
-        "poster_path",
-        "vote_average",
-        "title",
-    ]
 
-    with open(output_csv, mode="w", encoding="utf-8", newline="") as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=fields)
-        writer.writeheader()
-        for movie in all_movies:
-            row = {field: movie.get(field, "") for field in fields}
-            writer.writerow(row)
+    if output_csv:
+        os.makedirs(os.path.dirname(output_csv), exist_ok=True)
+        fields = [
+            "genre_ids",
+            "original_language",
+            "original_title",
+            "release_date",
+            "overview",
+            "popularity",
+            "poster_path",
+            "vote_average",
+            "title",
+        ]
+        with open(output_csv, mode="w", encoding="utf-8", newline="") as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=fields)
+            writer.writeheader()
+            for movie in all_movies:
+                row = {field: movie.get(field, "") for field in fields}
+                writer.writerow(row)
+        st.success(f"CSV file '{output_csv}' has been created.")
 
-    st.success(f"CSV file '{output_csv}' has been created.")
-    return True
+    return all_movies  # Return movies instead of writing to CSV if not needed
 
 
 def create_vector_database(input_csv, output_index):
@@ -106,7 +105,7 @@ def load_data_and_index(api_key):
     # Data Loading
     if not os.path.exists(csv_path):
         with st.spinner("Data file not found. Fetching data..."):
-            if not fetch_movies(api_key, csv_path):
+            if not fetch_movies(api_key, output_csv=csv_path):
                 st.error("Failed to fetch data.")
                 return None, None
             # After fetching data, rerun the app to load the new CSV

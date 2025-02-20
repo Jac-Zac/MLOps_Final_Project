@@ -27,4 +27,4 @@ jobs:
           playwright install
 
       - name: Run Playwright Tests
-        run: pytest tests/test_app.py
+        run: pytest -p no:warnings
