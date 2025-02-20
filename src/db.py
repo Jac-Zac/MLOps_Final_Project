@@ -10,9 +10,12 @@ from sentence_transformers import SentenceTransformer
 
 
 @st.cache_resource
-def load_embedding_model():
-    """Loads and caches the SentenceTransformer model."""
-    return SentenceTransformer("all-MiniLM-L12-v2")
+def load_embedding_model(model_name="nomic-ai/nomic-embed-text-v2-moe"):
+    """
+    Loads and caches the SentenceTransformer model.
+    Default is 'nomic-ai/nomic-embed-text-v2-moe'.
+    """
+    return SentenceTransformer(model_name, trust_remote_code=True)
 
 
 def fetch_movies(api_key, output_csv=None, max_pages=500):
@@ -57,7 +60,7 @@ def fetch_movies(api_key, output_csv=None, max_pages=500):
                 writer.writerow(row)
         st.success(f"CSV file '{output_csv}' has been created.")
 
-    return all_movies  # Return movies instead of writing to CSV if not needed
+    return all_movies
 
 
 def create_vector_database(input_csv, output_index):
@@ -74,7 +77,7 @@ def create_vector_database(input_csv, output_index):
         return False
 
     try:
-        model = load_embedding_model()
+        model = load_embedding_model()  # Uses default (or updated) model
         embeddings = model.encode(
             df["overview"].fillna("").tolist(), convert_to_numpy=True
         )
@@ -99,16 +102,13 @@ def load_data_and_index(api_key):
     csv_path = "data/movies.csv"
     index_path = "data/movies.index"
 
-    # Ensure the data directory exists
     os.makedirs(os.path.dirname(csv_path), exist_ok=True)
 
-    # Data Loading
     if not os.path.exists(csv_path):
         with st.spinner("Data file not found. Fetching data..."):
             if not fetch_movies(api_key, output_csv=csv_path):
                 st.error("Failed to fetch data.")
                 return None, None
-            # After fetching data, rerun the app to load the new CSV
             st.rerun()
 
     try:
@@ -117,13 +117,11 @@ def load_data_and_index(api_key):
         st.error(f"Error loading data: {e}")
         return None, None
 
-    # Index Loading/Creation
     if not os.path.exists(index_path):
         with st.spinner(f"Index file not found at {index_path}. Creating it now..."):
             if not create_vector_database(csv_path, index_path):
                 st.error("Failed to create Faiss index.")
                 return df, None
-            # After creating the index, rerun the app to load it
             st.rerun()
 
     try:

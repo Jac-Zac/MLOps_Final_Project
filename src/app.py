@@ -1,8 +1,13 @@
+import os
+
 import streamlit as st
 
 from db import (get_poster_url, get_random_films, load_data_and_index,
                 load_embedding_model)
 from movie_utils import MovieDisplay, MovieSearch, SidebarFilters, setup_page
+
+# Set num of threads to avoid problems
+os.environ["OMP_NUM_THREADS"] = "1"
 
 
 @st.cache_resource
