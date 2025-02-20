@@ -1,6 +1,7 @@
 # PickaFilm
 
 [![Tests](https://github.com/jac-zac/PickaFilm/actions/workflows/ci.yml/badge.svg)](https://github.com/jac-zac/PickaFilm/actions/workflows/ci.yml)
+[![Docs](https://github.com/jac-zac/PickaFilm/actions/workflows/deploy_docs.yml/badge.svg)](https://github.com/jac-zac/PickaFilm/actions/workflows/deploy_docs.yml)
 
 > Click the button below to access the APP
 
