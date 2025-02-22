@@ -126,7 +126,6 @@ def load_data_and_index(api_key):
 
     try:
         index = faiss.read_index(index_path)
-        st.success(f"Successfully loaded index from: {index_path}")
     except Exception as e:
         st.error(f"Error loading index: {e}")
         return df, None
