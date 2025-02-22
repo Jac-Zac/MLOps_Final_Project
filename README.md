@@ -25,7 +25,7 @@ The idea is to use Retrieval-Augmented Generation (RAG) to get the **k-most rele
 It is also possible to select just a minimum rating or genre.
 We also provide an interface to adjust the number of **k** movies retrieved.
 
-For software specifications and brainstorming, see our [Miro board](https://miro.com/welcomeonboard/c0ppclVqUGM2aysyT0t0S1liTVZoYzdVeGVTV3RtOFBIZk1wK0dCajdPUm5YSDIwaGdha3BZWTEzN0k2SWdMV0s0L1NYREt5Q2oxT1FqMGpCZDJSYnl5bWVRNitWOGhya1ZCTGdOQTBwWlBYaFVwWXNtK2VVMFdZWlJQWlBuNDYhZQ==?share_link_id=912840001517).
+For software requirements, see our [Miro board](https://miro.com/welcomeonboard/c0ppclVqUGM2aysyT0t0S1liTVZoYzdVeGVTV3RtOFBIZk1wK0dCajdPUm5YSDIwaGdha3BZWTEzN0k2SWdMV0s0L1NYREt5Q2oxT1FqMGpCZDJSYnl5bWVRNitWOGhya1ZCTGdOQTBwWk1CSWJHd1NTUWl1MUZiNnk4K0ZMUzBBd044SHFHaVlWYWk0d3NxeHNmeG9BPT0hdjE=?share_link_id=827688847150).
 
 ## Talk About Issues or Extensions
 
