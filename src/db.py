@@ -10,7 +10,7 @@ from sentence_transformers import SentenceTransformer
 
 
 @st.cache_resource
-def load_embedding_model(model_name="nomic-ai/nomic-embed-text-v2-moe"):
+def load_embedding_model(model_name="all-MiniLM-L12-v2"):
     """
     Loads and caches the SentenceTransformer model.
     Default is 'nomic-ai/nomic-embed-text-v2-moe'.
